@@ -1,5 +1,6 @@
 package com.example.inhilenttest.api
 
+import com.example.inhilenttest.util.Constant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,8 +20,8 @@ object NetworkModule {
     fun provideHttpClient(): OkHttpClient {
         return OkHttpClient
             .Builder()
-            .readTimeout(15, TimeUnit.SECONDS)
-            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(Constant.TIME_OUT_REQUEST, TimeUnit.SECONDS)
+            .connectTimeout(Constant.TIME_OUT_REQUEST, TimeUnit.SECONDS)
             .build()
     }
 
@@ -37,7 +38,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://run.mocky.io/")
+            .baseUrl(Constant.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

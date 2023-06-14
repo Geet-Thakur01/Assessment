@@ -30,10 +30,12 @@ import com.example.inhilenttest.compose.DetailsScreen
 import com.example.inhilenttest.compose.ProductListGrid
 import com.example.inhilenttest.compose.TopBarLayout
 import com.example.inhilenttest.compose.BottomBarNavigate
+import com.example.inhilenttest.compose.ErrorMsg
 import com.example.inhilenttest.compose.viewmodel.ProductListViewModel
 import com.example.inhilenttest.screen.DATA
 import com.example.inhilenttest.screen.Screens
 import com.example.inhilenttest.ui.theme.InhilentTestTheme
+import com.example.inhilenttest.util.Util
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,8 +46,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             InhilentTestTheme {
-                AppMainScreen(productListViewModel = productListViewModel)
-                productListViewModel.fetchProducts()
+
+                    AppMainScreen(productListViewModel = productListViewModel)
+                    productListViewModel.fetchProducts()
+
             }
         }
     }
@@ -74,19 +78,24 @@ fun AppMainScreen(
             NavHost(navController = navController,
                 startDestination = Screens.ProductList.route) {
                 composable(route = Screens.ProductList.route) {
-                    ProductListGrid(
-                        contentPadding = innerPadding,
-                        navController = navController,
-                        viewModel = productListViewModel
-                    )
+                    if (Util.InternetIsConnected().not()) {
+                        ErrorMsg(msg = R.string.internet_not_available)
+                    } else {
+                        if(productListViewModel.productLiveData.value==null){
+                            productListViewModel.fetchProducts()
+                        }
+                        ProductListGrid(
+                            contentPadding = innerPadding,
+                            navController = navController,
+                            viewModel = productListViewModel
+                        )
+                    }
                 }
                 composable(Screens.Details.route,
                     arguments = listOf(navArgument(DATA) {
                     type = NavType.StringType
-                    defaultValue = "default"
                 })) {
                     DetailsScreen(
-                        navController = navController,
                         padding = innerPadding,
                         viewModel = productListViewModel
                     )

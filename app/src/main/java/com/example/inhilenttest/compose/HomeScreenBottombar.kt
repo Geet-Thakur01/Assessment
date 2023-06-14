@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.inhilenttest.util.Constant
 import com.example.inhilenttest.compose.viewmodel.ProductListViewModel
 import com.example.inhilenttest.screen.Screens
 
@@ -24,7 +25,7 @@ fun BottomBarNavigate(
     navController: NavHostController,
     viewModel: ProductListViewModel
 ) {
-    val items = listOf("Products", "Favorites")
+    val items = listOf(Constant.PRODUCTS, Constant.FAVORITES)
     val icons = listOf(Icons.Filled.Home, Icons.Filled.Favorite)
     var selectedItem by remember { mutableIntStateOf(0) }
 

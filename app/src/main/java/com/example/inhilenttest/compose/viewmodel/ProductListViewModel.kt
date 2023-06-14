@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.inhilenttest.util.Constant
 import com.example.inhilenttest.api.MyRepository
 import com.example.inhilenttest.data.DataList
 import com.example.inhilenttest.data.Product
@@ -38,7 +39,7 @@ class ProductListViewModel @Inject constructor(private val repository: MyReposit
     }
 
     //    on title change
-    val titleChange = MutableLiveData("Products")
+    val titleChange = MutableLiveData(Constant.PRODUCTS)
     fun setTitle(title: String) {
         titleChange.postValue(title)
     }

@@ -10,14 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.inhilenttest.compose.viewmodel.ProductListViewModel
-import com.example.inhilenttest.screen.DATA
 import com.example.inhilenttest.screen.Screens
-import com.example.inhilenttest.ui.theme.InhilentTestTheme
-import com.google.gson.Gson
+import com.example.inhilenttest.util.Constant
 
 @Composable
 fun ProductListGrid(
@@ -28,6 +25,7 @@ fun ProductListGrid(
 ) {
 
     val productList by viewModel.productLiveData.observeAsState()
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = contentPadding,
@@ -35,7 +33,7 @@ fun ProductListGrid(
         verticalArrangement = Arrangement.spacedBy(2.dp),
 
         ) {
-        val listdata = if(viewModel.titleChange.value=="Products")
+        val listdata = if (viewModel.titleChange.value == Constant.PRODUCTS)
             productList?.products
         else
             productList?.products?.filter { it.isInWishlist }

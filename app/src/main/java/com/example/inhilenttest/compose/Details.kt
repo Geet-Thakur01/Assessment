@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,15 +22,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.inhilenttest.R
 import com.example.inhilenttest.compose.viewmodel.ProductListViewModel
 
 @Composable
 fun DetailsScreen(
-    navController: NavController,
     padding: PaddingValues,
     viewModel: ProductListViewModel
 ) {
@@ -48,7 +46,7 @@ fun DetailsScreen(
     ) {
         AsyncImage(
             model = product.imageURL,
-            contentDescription = "image loaded",
+            contentDescription = stringResource(id = R.string.image_loding),
             modifier = Modifier
                 .fillMaxWidth()
                 .align(alignment = Alignment.CenterHorizontally)
@@ -66,9 +64,8 @@ fun DetailsScreen(
             Icon(imageVector = if (asFev == 0) Icons.Outlined.FavoriteBorder else Icons.Filled.Favorite,
                 contentDescription = "my favorite",
                 modifier = Modifier.clickable {
-                   asFev= if(asFev==1) 0 else 1
+                    asFev = if (asFev == 1) 0 else 1
                     product.isInWishlist = asFev == 1
-                    Log.e("TAG121","${product.isInWishlist}")
                     viewModel.addRemoveFevProduct(product)
                 })
         }
